@@ -1,1 +1,1 @@
-# webpack-server-template
+# webpack-serve-template
