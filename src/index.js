@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import App from './App.jsx';
+
 ReactDOM.render(
-    <h1>Webpack-serve configure correct!</h1>,
-        document.getElementById('root')
+    <App />,
+    document.getElementById('root'),
 );
+
+const element = document.getElementById('root')
+
+console.log(element)
