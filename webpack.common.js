@@ -1,7 +1,16 @@
-const path = require('path');
+const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { MiniHtmlWebpackPlugin} = require("mini-html-webpack-plugin");
+const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
+
+const headHTML = `<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>webpack-serve-template</title>`;
+
+const bodyHTML = `<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+<script type="text/javascript" src="./dist/bundle.js"></script>`;
 
 module.exports = {
   entry: "./src/index.js",
@@ -28,16 +37,16 @@ module.exports = {
       },
       {
         test: /\.(svg|png|jpg)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[name].[ext]',
+          name: "[name].[ext]",
         },
-      }
-    ]
+      },
+    ],
   },
 
   resolve: {
-    extensions: [".js", ".jsx",],
+    extensions: [".js", ".jsx"],
   },
 
   watch: true,
@@ -47,11 +56,17 @@ module.exports = {
       filename: "styles/[name].css",
     }),
     new MiniHtmlWebpackPlugin({
-      filename: 'index.html',
+      filename: "index.html",
       context: {
-        title: 'webpack-serve-template',
-      }
+        title: "webpack-serve-template",
+        // без этого plugin не генерирует html файл с id="root", в отличии от HtmlWebpackPlugin где нужно указать свойство template => путь к файлу html
+        head: headHTML,
+        body: bodyHTML,
+        htmlAttributes: {
+          lang: "en",
+        },
+      },
     }),
     new CleanWebpackPlugin(),
   ],
-}
+};
