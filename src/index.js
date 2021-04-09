@@ -7,7 +7,3 @@ ReactDOM.render(
     <App />,
     document.getElementById('root'),
 );
-
-const element = document.getElementById('root')
-
-console.log(element)

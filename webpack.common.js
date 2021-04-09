@@ -2,24 +2,19 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const headHTML = `<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>webpack-serve-template</title>`;
+const headHTML = `<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="icon" href="%PUBLIC_URL%/favicon.ico">`;
 
-const bodyHTML = `<noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="root"></div>
-<script type="text/javascript" src="./dist/bundle.js"></script>`;
+const bodyHTML = `<div id="root"></div>`;
 
 module.exports = {
   entry: "./src/index.js",
-
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
-
   module: {
     rules: [
       {
@@ -36,37 +31,31 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "less-loader"],
       },
       {
-        test: /\.(svg|png|jpg)$/,
+        test: /\.(svg|png|jpg|ico)$/,
         loader: "file-loader",
-        options: {
-          name: "[name].[ext]",
-        },
       },
     ],
   },
-
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ["*", ".js", ".jsx"],
   },
-
   watch: true,
-
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "styles/[name].css",
+      filename: "index.css",
     }),
     new MiniHtmlWebpackPlugin({
       filename: "index.html",
       context: {
         title: "webpack-serve-template",
-        // без этого plugin не генерирует html файл с id="root", в отличии от HtmlWebpackPlugin где нужно указать свойство template => путь к файлу html
         head: headHTML,
         body: bodyHTML,
-        htmlAttributes: {
-          lang: "en",
-        },
+        // favicon: '%PUBLIC_URL%/favicon.ico'
       },
     }),
+    new CopyWebpackPlugin({ patterns: [
+      { from: "public", to: "public" },
+    ],}),
     new CleanWebpackPlugin(),
   ],
 };
