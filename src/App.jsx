@@ -6,7 +6,7 @@ class App extends React.Component {
     return (
       <div>
         <Helmet>
-          <link rel="icon" type="image/png" href="../public/favicon.ico"/>
+          <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.ico"/>
         </Helmet>
       </div>
     );

@@ -5,7 +5,7 @@ const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const headHTML = `<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="icon" href="%PUBLIC_URL%/favicon.ico">`;
+<meta name="viewport" content="width=device-width, initial-scale=1.0">`;
 
 const bodyHTML = `<div id="root"></div>`;
 
@@ -50,12 +50,11 @@ module.exports = {
         title: "webpack-serve-template",
         head: headHTML,
         body: bodyHTML,
-        // favicon: '%PUBLIC_URL%/favicon.ico'
       },
     }),
-    new CopyWebpackPlugin({ patterns: [
-      { from: "public", to: "public" },
-    ],}),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "./src/assets", to: "public" }],
+    }),
     new CleanWebpackPlugin(),
   ],
 };
